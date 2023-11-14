@@ -1,0 +1,87 @@
+/*
+You have a 2D grid representing a spider’s web.  The grid consists of cells where each cell is either empty (0) or contains a spider (1).  The spider wants to move from the top-left corner (cell[0][0]) to the bottom-right corner(cell[n-1][m-1]) of the grid while avoiding spiders.  The spider can only move right or down to adjacent cells.
+Write a function that determines whether the spider can reach the bottom-right corner of the grid while avoiding spiders.  Return True if the spider can reach the end, and False otherwise.
+Input:
+0 0 1 1 1
+1 0 0 1 1
+1 1 0 0 1
+1 1 1 0 0
+1 1 1 1 0
+
+Output:
+ True	Input:
+1 0 1 1 1
+1 1 0 1 1
+0 1 1 0 1
+1 0 1 0 0
+0 1 0 1 1
+
+Output:
+ False
+*/
+
+import java.util.*;
+import java.util.Random;
+
+public class spiderpattern {
+
+	public static void main(String[] args) {
+		int arr[][]=new int[5][5];
+		for(int i=0;i<5;i++) {
+			for(int j=0;j<5;j++) {
+				if(i==j || j==i+1) {
+					arr[i][j]=0;
+				}else {
+					arr[i][j]=1;
+				}
+			}
+		}
+		System.out.println("Array value ");
+		for(int i=0;i<5;i++) {
+			for(int j=0;j<5;j++) {
+				System.out.print(arr[i][j]);
+			}
+			System.out.println();
+		}
+		spider_web sb=new spider_web();
+		boolean ans=sb.spider_reach(arr, 5);
+		System.out.println(ans);
+	}
+}
+
+class spider_web{
+	boolean spider_reach(int web_arr[][],int length) {
+		int val,last_right=0,last_down=0,flag=0;
+		for(int i=0;i<length;i++) {
+			for(int j=0;j<length;j++) {
+				if(i+1==j || i-j==1) {
+					val=web_arr[i][j];
+					if(val==0) {
+						last_right=i;
+						last_down=j;
+					}
+				}
+			}
+		}
+		if(last_right==last_down+1 && last_right==length-1) {
+			val=web_arr[length-1][length-1];
+			if(val==0) {
+				flag=1;
+			}
+		}else if(last_down==last_right+1 && last_down==length-1) {
+			val=web_arr[length-1][length-1];
+			if(val==0) {
+				flag=1;
+			}
+		}else {
+			flag=0;
+		}
+		if(flag==1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+}
+
+
